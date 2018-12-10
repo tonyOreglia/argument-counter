@@ -1,5 +1,5 @@
 # Unique Word Counter
-Write a non-trivial program in assembly language
+Write a trivial program in assembly language
 
 ## Summary
 Prompt user for a text file input.
