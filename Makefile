@@ -2,7 +2,7 @@ current_dir = $(shell pwd)
 
 # default assembly code location
 ifeq ($(asm),)
-  asm = "hellow"
+  asm = "unique-word-counter"
 endif
 
 build-image:
@@ -15,6 +15,9 @@ run:
 	docker run --rm -v "$(current_dir)":/app -w /app linux-assembly sh -c "./a.out"
 
 debug: 
-	docker run --rm -it --cap-add=SYS_PTRACE -v "$(current_dir)":/app -w /app linux-assembly sh -c "gdb a.out"
+	docker run --rm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v "$(current_dir)":/app -w /app linux-assembly sh -c "gdb a.out"
+
+run-container:
+	docker run --rm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v "$(current_dir)":/app -w /app linux-assembly /bin/bash
 
 
