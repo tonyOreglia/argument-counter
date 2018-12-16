@@ -5,6 +5,8 @@ section .text
 _start:
   call .printNumberOfArgs
   call .printNewline
+  call .printArg
+  call .printNewline
   call .exit
 
 .printNumberOfArgs:
@@ -15,7 +17,19 @@ _start:
   mov rsi, rsp    ; store value of rsp, i.e. pointer to ascii argc to param2 of sys_write fxn
   mov rdx, 8      ; param3 of sys_write fxn is the number of bits to print
   push rbx        ; return the address of the calling fxn to top of stack.
-  jmp .print 
+  call .print
+  ; clean up the newline character pushed onto the stack. Retaining the return address currently on top of stack
+  pop rbx
+  pop rcx
+  push rbx
+  ret
+
+.printArg:
+  pop rcx         ; this is the address of the calling fxn. Remove it from the stack for a moment so I can get to the argc       
+  mov rsi, [rsp]  ; contents of memory address of stack pointer
+  mov rdx, 7      ; how long is the message?
+  push rcx        ; push return address back onto stack where it is expected
+  jmp .print
 
 .printNewline:
   pop rbx         ; this is the address of the calling fxn. Remove it from the stack for a moment so I can get to the argc
@@ -23,6 +37,11 @@ _start:
   mov rsi, rsp    ; rsp points to top of stack. Newline has been pushed to top of stack. rsi is where 2nd param of sys_write is stored
   push rbx        ; return the address of the calling fxn to top of stack.
   call .print
+  ; clean up the newline character pushed onto the stack. Retaining the return address currently on top of stack
+  pop rbx
+  pop rcx
+  push rbx
+  ret
   
 .print:           ; print expects the calling location to be at the top of the stack
   mov rax, 1
