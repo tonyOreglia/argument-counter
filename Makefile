@@ -11,13 +11,13 @@ build-image:
 build:
 	docker run --rm -v $(current_dir):/app -w /app linux-assembly sh -c "nasm -f elf64 -F dwarf -g $(asm).asm && ld -m elf_x86_64 $(asm).o"
 
-run: 
-	docker run --rm -v "$(current_dir)":/app -w /app linux-assembly sh -c "./a.out"
+run: build
+	docker run --rm -v $(current_dir):/app -w /app linux-assembly sh -c "./a.out"
 
-debug: 
+debug: build
 	docker run --rm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v "$(current_dir)":/app -w /app linux-assembly sh -c "gdb a.out"
 
 run-container:
-	docker run --rm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v "$(current_dir)":/app -w /app linux-assembly /bin/bash
+	docker run --rm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v "$(current_dir)":/app -w /app linux-assembly
 
 
