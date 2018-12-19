@@ -2,7 +2,7 @@ current_dir = $(shell pwd)
 
 # default assembly code location
 ifeq ($(asm),)
-  asm = "unique-word-counter"
+  asm = unique-word-counter
 endif
 
 build-image:
@@ -12,7 +12,7 @@ build:
 	docker run --rm -v $(current_dir):/app -w /app linux-assembly sh -c "nasm -f elf64 -F dwarf -g $(asm).asm && ld -m elf_x86_64 $(asm).o"
 
 run: build
-	docker run --rm -v $(current_dir):/app -w /app linux-assembly sh -c "./a.out"
+	docker run --rm -v $(current_dir):/app -w /app linux-assembly sh -c ./a.out
 
 run-with-args: build
 	docker run --rm -v $(current_dir):/app -w /app linux-assembly sh -c "./a.out $(args)"

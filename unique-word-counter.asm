@@ -3,22 +3,30 @@ section .data
 section .text
     global _start
 _start:
-  call .printNumberOfArgs
+  call .getNumberOfArgs   ; expects return value in $rax
+  mov rdi, rax
+  call .printNumberOfArgs ; expects value to be in 1st argument, i.e. $rdi
   call .printNewline
   call .printArg
   call .printNewline
   call .exit
 
+.getNumberOfArgs:
+  pop rbx         ; this is the address of the calling fxn. Remove it from the stack for a moment so I can get to the argc
+  pop rax         ; get argc from stack
+  push rbx        ; return address of calling fxn to stack
+  ret
+
+; expects value to be in 1st argument, i.e. $rdi
 .printNumberOfArgs:
   pop rbx         ; this is the address of the calling fxn. Remove it from the stack for a moment so I can get to the argc
-  pop rcx         ; get argc from stack
-  add rcx, 48     ; convert number of args to ascii (only works if < 10)
-  push rcx        ; push the ascii converted argc to stack
+  add rdi, 48     ; convert number of args to ascii (only works if < 10)
+  push rdi        ; push the ascii converted argc to stack
   mov rsi, rsp    ; store value of rsp, i.e. pointer to ascii argc to param2 of sys_write fxn
   mov rdx, 8      ; param3 of sys_write fxn is the number of bits to print
   push rbx        ; return the address of the calling fxn to top of stack.
   call .print
-  ; clean up the newline character pushed onto the stack. Retaining the return address currently on top of stack
+  ; clean up the number that was pushed onto the stack. Retaining the return address currently on top of stack
   pop rbx
   pop rcx
   push rbx
