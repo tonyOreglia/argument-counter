@@ -18,9 +18,9 @@ run-with-args: build
 	docker run --rm -v $(current_dir):/app -w /app linux-assembly sh -c "./a.out $(args)"
 
 debug: build
-	docker run --rm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v "$(current_dir)":/app -w /app linux-assembly sh -c "gdb a.out"
+	docker run --rm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $(current_dir):/app -w /app linux-assembly sh -c "gdb a.out"
 
 run-container:
-	docker run --rm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v "$(current_dir)":/app -w /app linux-assembly
+	docker run --rm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $(current_dir):/app -w /app linux-assembly
 
 
