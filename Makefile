@@ -21,6 +21,6 @@ debug: build
 	docker run --rm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $(current_dir):/app -w /app linux-assembly sh -c "gdb a.out"
 
 run-container:
-	docker run --rm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $(current_dir)-wt:/app -w /app linux-assembly
+	docker run --rm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $(current_dir):/app -w /app linux-assembly
 
 
