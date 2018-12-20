@@ -26,11 +26,23 @@ _start:
   pop rdi         ; clean the stack
   ret
 
+; expects * char[] in $rdi
+.strlen:
+  mov rax, -1             ; initialize strlen counter
+  cmp byte [rdi], 0x00    ; if value at [rdi] is 0x00 return
+  add rdi, 8              ; increment char * to next character
+  add rax, 1              ; increment strlen counter
+  jne .strlen             ; loop if not at end of string
+  ret
+
+
 .printAllArgs:
   call .printNewline   ; fxn prints newline
   pop r11              ; pop address of the calling fxn. Remove temporarily
-  mov rsi, [rsp]       ; stack pointer memory address. Holding argument to print. 
-  mov rdx, 8           ; how long is the message. TO DO: calculate argument length
+  mov rsi, [rsp]       ; stack pointer memory address. Holding argument to print.
+  mov rdi, rsi
+  call .strlen         ; expect strlen to be in $rax after funtion returns
+  mov rdx, rax         ; how long is the message. TO DO: calculate argument length
   push r11             ; push return address back onto the stack
   call .print
   pop r11              ; pop return address
