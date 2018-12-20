@@ -27,19 +27,19 @@ _start:
   ret
 
 .printAllArgs:
-  call .printNewline
-  pop r11         ; this is the address of the calling fxn. Remove it from the stack for a moment so I can get to the argc
-  mov rsi, [rsp]  ; contents of memory address of stack pointer (+8 because top of stack is return address)
-  mov rdx, 2      ; how long is the message?
-  push r11        ; push return address back onto the stack
+  call .printNewline   ; fxn prints newline
+  pop r11              ; pop address of the calling fxn. Remove temporarily
+  mov rsi, [rsp]       ; stack pointer memory address. Holding argument to print. 
+  mov rdx, 8           ; how long is the message. TO DO: calculate argument length
+  push r11             ; push return address back onto the stack
   call .print
-  pop r11         ; this is the address of the calling fxn. Remove it from the stack for a moment so I can get to the argc
-  pop rcx         ; this is the already printed arg
-  push r11        ; push return address back onto the stack
-  sub rbx, 1
-  cmp rbx, 0
-  jne .printAllArgs
-  call .printNewline
+  pop r11              ; pop return address
+  pop rcx              ; this is the already printed arg
+  push r11             ; push return address back onto the stack
+  sub rbx, 1           ; rbx is the argument count. Iterate down 1
+  cmp rbx, 0           ; are there zero args left to print? 
+  jne .printAllArgs    ; if more args to print, loop again
+  call .printNewline   ; otherwise print Newline and return
   ret
   
 
