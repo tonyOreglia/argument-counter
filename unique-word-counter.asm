@@ -26,13 +26,21 @@ _start:
   pop rdi         ; clean the stack
   ret
 
+; check first bytes
+; increment counter
+; increment var
+; loop 
+
 ; expects * char[] in $rdi
 .strlen:
-  mov rax, -1             ; initialize strlen counter
+  mov rax, 0              ; initialize strlen counter
   cmp byte [rdi], 0x00    ; if value at [rdi] is 0x00 return
-  add rdi, 8              ; increment char * to next character
+  jne .loop
+.loop:
+  add rdi, 1              ; increment char * to next character
   add rax, 1              ; increment strlen counter
-  jne .strlen             ; loop if not at end of string
+  cmp byte [rdi], 0x00    ; if value at [rdi] is 0x00 return
+  jne .loop               ; loop if not at end of string
   ret
 
 
