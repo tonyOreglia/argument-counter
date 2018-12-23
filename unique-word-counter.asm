@@ -33,9 +33,7 @@ _start:
 
 ; expects * char array in $rdi
 .strlen:
-  mov rax, 0              ; initialize strlen counter
-  cmp byte [rdi], 0x00    ; if value at [rdi] is 0x00 return
-  jne .loop
+  mov rax, 1             ; initialize strlen counter
 .loop:
   add rdi, 1              ; increment char * to next character
   add rax, 1              ; increment strlen counter
