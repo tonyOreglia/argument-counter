@@ -31,7 +31,7 @@ _start:
 ; increment var
 ; loop 
 
-; expects * char[] in $rdi
+; expects * char array in $rdi
 .strlen:
   mov rax, 0              ; initialize strlen counter
   cmp byte [rdi], 0x00    ; if value at [rdi] is 0x00 return
@@ -68,6 +68,7 @@ _start:
   push 10         ; ascii newline character
   mov rsi, rsp    ; rsp points to top of stack. Newline has been pushed to top of stack. rsi is where 2nd param of sys_write is stored
   push r11        ; return the address of the calling fxn to top of stack.
+  mov rdx, 2
   call .print
   ; clean up the newline character pushed onto the stack. Retaining the return address currently on top of stack
   pop r11
