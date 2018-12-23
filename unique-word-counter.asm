@@ -26,11 +26,6 @@ _start:
   pop rdi         ; clean the stack
   ret
 
-; check first bytes
-; increment counter
-; increment var
-; loop 
-
 ; expects * char array in $rdi
 .strlen:
   mov rax, 1             ; initialize strlen counter
