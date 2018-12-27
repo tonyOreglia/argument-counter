@@ -40,7 +40,8 @@ _start:
   pop rdi
   push rcx
   mov rax, SYS_OPEN
-  mov rsi, O_RDONLY
+  xor rsi, rsi
+  ;mov rsi, O_RDONLY
   syscall
   mov r11, 0                ; for use in comparison next line
   cmp r11, rax              ; if rax is less than zero, this means file was not opened successfully

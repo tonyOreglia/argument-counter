@@ -1,24 +1,29 @@
 current_dir = $(shell pwd)
 
+build = nasm -f elf64 -F dwarf -g $(asm).asm && ld -m elf_x86_64 $(asm).o
+
 # default assembly code location
 ifeq ($(asm),)
   asm = unique-word-counter
 endif
 
-build-image:
-	docker build -t linux-assembly .
+build-base:
+	docker build -f Dockerfile.base -t linux-assembly .
 
-build:
-	docker run --rm -v $(current_dir):/app -w /app linux-assembly sh -c "nasm -f elf64 -F dwarf -g $(asm).asm && ld -m elf_x86_64 $(asm).o"
+copy:
+	docker build -f Dockerfile.cp -t unique-word-counter .
 
-run: build
-	docker run --rm -v $(current_dir):/app -w /app linux-assembly sh -c ./a.out
+build: copy
+	docker run --rm -w /app unique-word-counter sh -c "nasm -f elf64 -F dwarf -g $(asm).asm && ld -m elf_x86_64 $(asm).o"
 
-run-with-args: build
-	docker run --rm -v $(current_dir):/app -w /app linux-assembly sh -c "./a.out $(args)"
+run: copy
+	docker run --rm -w /app unique-word-counter sh -c "$(build) && ./a.out"
+
+run-with-args: copy
+	docker run --rm -w /app unique-word-counter sh -c "$(build) && ./a.out $(args)"
 
 debug: build
-	docker run --rm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $(current_dir):/app -w /app linux-assembly sh -c "gdb a.out"
+	docker run --rm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $(current_dir):/app -w /app linux-assembly sh -c "$(build) && gdb a.out"
 
 run-container:
 	docker run --rm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -v $(current_dir):/app -w /app linux-assembly
