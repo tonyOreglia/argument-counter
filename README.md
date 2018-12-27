@@ -4,8 +4,7 @@ Write a trivial program in assembly language
 See wiki [here](https://github.com/tonyOreglia/unique-word-counter/wiki)
 
 ## Summary
-Prompt user for a text file input.
-Return the most commonly used word in the text file to standard output.
+Print out the command line arguments. 
 
 ## Run and Debug on Docker
 #### Build Image 
@@ -21,6 +20,11 @@ make build
 #### Run 
 ```
 make run
+```
+
+#### Run with Arguments
+```
+make run-with-args args="arg1 arg2 arg3"
 ```
 
 #### Debug
