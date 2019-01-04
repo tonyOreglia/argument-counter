@@ -1,10 +1,13 @@
-# Unique Word Counter
-Write a trivial program in assembly language
-
-See wiki [here](https://github.com/tonyOreglia/unique-word-counter/wiki)
-
 ## Summary
-Print out the command line arguments. 
+Goal started out to Write a trivial program in assembly language. 
+
+This program prints out the number of arguments provided to the program and prints them out to the terminal. 
+
+See the wiki with process, learnings and guidance [here](https://github.com/tonyOreglia/unique-word-counter/wiki)
+
+## Dependencies
+* [Docker](https://www.docker.com/get-started)
+* [Make](https://www.tutorialspoint.com/unix_commands/make.htm) command line utility
 
 ## Run and Debug on Docker
 #### Build Image 
