@@ -2,7 +2,7 @@ current_dir = $(shell pwd)
 
 # default assembly code location
 ifeq ($(asm),)
-  asm = unique-word-counter
+  asm = argument-printer
 endif
 
 build-image:
