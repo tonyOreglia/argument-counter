@@ -8,31 +8,31 @@ Print out the command line arguments.
 
 ## Run and Debug on Docker
 #### Build Image 
-```console
-$ make build-image
+```sh
+make build-image
 ```
 
 #### Compile and Link
-```console
-$ make build
+```sh
+make build
 ```
 
 #### Build and Run the executable
-```console
-$ make run
+```sh
+make run
 ```
 
 #### Build and Run with Arguments
-```console
-$ make run-with-args args="arg1 arg2 arg3"
+```sh
+make run-with-args args="arg1 arg2 arg3"
 ```
 
 #### Build and Debug
-```console
-$ make debug
+```sh
+make debug
 ```
 
 #### Run the Container Attached via Terminal
-```console 
-$ make run-container
+```sh 
+make run-container
 ```
