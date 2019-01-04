@@ -1,7 +1,9 @@
 ## Summary
-Goal started out to Write a trivial program in assembly language. 
+Goal started out to Write a trivial program in x86_64 assembly language. 
 
 This program prints out the number of arguments provided to the program and prints them out to the terminal. 
+
+`nasm` is used for compiling the program, `ld` for linking and `gdb` for debugging. Docker is used to containerize the workflow within an alpine-linux image. 
 
 See the wiki with process, learnings and guidance [here](https://github.com/tonyOreglia/unique-word-counter/wiki)
 
